@@ -90,21 +90,25 @@ bindsym $mod+a focus parent
 
 
 #Custom Workspace Variables
-set $workspace1 "1: Terminals"
-set $workspace2 "2: Firefox"
-set $workspace5 "5: ??"
-set $workspace8 "8: Comms " 
-set $workspace9 "9: Virtual"
-set $workspace10 "10: Media"
+set $workspace1 "1: term"
+set $workspace2 "2: fire"
+set $workspace3 "3: code"
+set $workspace4 "4: edit"
+set $workspace5 "5: virt"
+set $workspace6 "6"
+set $workspace7 "7"
+set $workspace8 "8: steam" 
+set $workspace9 "9: comm"
+set $workspace10 "10: music"
 
 # switch to workspace
 bindsym $mod+1 workspace $workspace1
 bindsym $mod+2 workspace $workspace2
-bindsym $mod+3 workspace 3
-bindsym $mod+4 workspace 4
+bindsym $mod+3 workspace $workspace3
+bindsym $mod+4 workspace $workspace4
 bindsym $mod+5 workspace $workspace5
-bindsym $mod+6 workspace 6
-bindsym $mod+7 workspace 7
+bindsym $mod+6 workspace $workspace6
+bindsym $mod+7 workspace $workspace7
 bindsym $mod+8 workspace $workspace8
 bindsym $mod+9 workspace $workspace9
 bindsym $mod+0 workspace $workspace10
@@ -112,11 +116,11 @@ bindsym $mod+0 workspace $workspace10
 # move focused container to workspace
 bindsym $mod+Shift+1 move container to workspace $workspace1
 bindsym $mod+Shift+2 move container to workspace $workspace2
-bindsym $mod+Shift+3 move container to workspace 3
-bindsym $mod+Shift+4 move container to workspace 4
+bindsym $mod+Shift+3 move container to workspace $workspace3
+bindsym $mod+Shift+4 move container to workspace $workspace4
 bindsym $mod+Shift+5 move container to workspace $workspace5
-bindsym $mod+Shift+6 move container to workspace 6
-bindsym $mod+Shift+7 move container to workspace 7
+bindsym $mod+Shift+6 move container to workspace $workspace6
+bindsym $mod+Shift+7 move container to workspace $workspace7
 bindsym $mod+Shift+8 move container to workspace $workspace8
 bindsym $mod+Shift+9 move container to workspace $workspace9
 bindsym $mod+Shift+0 move container to workspace $workspace10
@@ -158,7 +162,7 @@ bindsym $mod+r mode "resize"
 # custom color variables
 #
 set $bg-color 	         #2f343f
-set $inactive-bg-color   #2f343f
+set $inactive-bg-color   #18243f
 set $text-color          #f3f4f5
 set $inactive-text-color #676E7D
 set $urgent-bg-color     #E53935
@@ -179,43 +183,38 @@ bar {
 		background $bg-color
 	    	separator #757575
 		#                  border             background         text
-		focused_workspace  $bg-color          $bg-color          $text-color
+		focused_workspace  #50596c            $bg-color          $text-color
 		inactive_workspace $inactive-bg-color $inactive-bg-color $inactive-text-color
 		urgent_workspace   $urgent-bg-color   $urgent-bg-color   $text-color
 	}
 }
 
 
-## custom keybinds ##
+# fancy i3lock keybind
+bindsym $mod+shift+x exec ~/bin/i3/i3lock -p
 
-# Keybinding to lock the screen
-bindsym $mod+shift+x exec /usr/bin/lock -p
-# netflix
-bindsym $mod+shift+n exec /usr/bin/netflix
+# netflix keybind
+bindsym $mod+shift+n exec ~/bin/apps/netflix
 
-
-## rice ##
-# Custom wallpaper
-exec_always feh --bg-scale /r.share/wallpapers/simple.png
-
-# monitor setup
-exec_always exec xrandr --output DisplayPort-0 --off --output DVI-1 --mode 1600x900 --pos 0x180 --rotate normal --output DVI-0 --off --output HDMI-0 --primary --mode 1920x1080 --pos 1600x0 --rotate normal
+# move workspace to left monitor
+bindsym $mod+shift+f move workspace to output left
 
 
-## commands ##
+## exec commands ##
+
+# monitor layout
+
+exec_always xrandr --output DisplayPort-0 --off --output DVI-1 --mode 1600x900 --pos 0x0 --rotate normal --output DVI-0 --off --output HDMI-0 --primary --mode 1920x1080 --pos 1600x0 --rotate normal
+
 
 # Teamspeak3 Client 
-exec /usr/bin/TeamSpeak3-Client-linux_amd64/ts3client_runscript.sh
-
-assign [class="TeamSpeak 3"] $workspace8
+exec ~/bin/ts3/ts3client_runscript.sh
 
 # Chrome
 exec firefox
-assign [class="Firefox"] $workspace2
 
 #Rhythmbox
-exec rhytmbox
-assign [class="Rhythmbox"] $workspace10
+exec rhythmbox
 
 # redshift
 exec redshift
@@ -225,3 +224,19 @@ exec xautolock -time 20
 
 # compton
 exec_always compton -f
+
+# steam
+exec steam
+
+#custom wallpaper
+exec_always feh --bg-scale ~/Pictures/Wallpapers/road.jpg
+
+
+## Window assignment ##
+
+assign [class="Firefox"] $workspace2
+assign [class="Gedit"] $workspace4
+assign [class="Steam"] $workspace8
+assign [class="TeamSpeak 3"] $workspace9
+assign [class="Rhythmbox"] $workspace10
+
